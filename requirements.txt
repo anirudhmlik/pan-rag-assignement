@@ -1,0 +1,18 @@
+fastapi
+uvicorn[standard]
+python-multipart
+langchain
+langchain-community
+langchain-core
+langchain-openai
+langchain-google-genai # <--- ADD THIS LINE
+pypdf
+sentence-transformers
+faiss-cpu
+sqlalchemy
+psycopg2-binary
+python-dotenv
+openai
+google-generativeai
+pytest
+httpx

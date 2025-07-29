@@ -1,0 +1,58 @@
+# pan-rag-assignement/docker-compose.yml
+
+version: '3.8'
+
+services:
+  rag_app:
+    build:
+      context: . # Build from the current directory where the Dockerfile is
+      dockerfile: Dockerfile # Specify the Dockerfile name
+    ports:
+      - "8000:8000" # Map host port 8000 to container port 8000
+    env_file:
+      - .env # Load environment variables from a .env file in the root
+    environment:
+      # Override DATABASE_URL to connect to the 'metadata_db' service within the Docker network
+      DATABASE_URL: postgresql+psycopg2://user:password@metadata_db:5432/panscience_rag_db
+      # Ensure VECTOR_DB_PATH points to the mounted volume within the container
+      VECTOR_DB_PATH: /app/vector_db_data # This path inside the container will use the 'vector_db_data' volume
+    volumes:
+      # Mount your app directory for easier development (code changes reflect without rebuilding)
+      - ./app:/app/app
+      # Persistent storage for FAISS/Chroma indexes. Data written to /app/vector_db_data inside the container
+      # will persist in the named 'vector_db_data' volume.
+      - vector_db_data:/app/vector_db_data
+    depends_on:
+      metadata_db:
+        condition: service_healthy # Ensure DB is ready before starting the app
+    networks:
+      - rag_network
+
+  metadata_db:
+    image: postgres:15-alpine # Use a lightweight PostgreSQL 15 image
+    environment:
+      POSTGRES_DB: panscience_rag_db
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    volumes:
+      - db_data:/var/lib/postgresql/data # Persistent volume for PostgreSQL data
+    # Do not expose 5432 or 5433 to host directly unless you need to access DB from host
+    # Removing 'ports: - "5433:5432"' is generally better for security unless explicitly needed
+    healthcheck: # Health check to ensure DB is ready
+      test: ["CMD-SHELL", "pg_isready -U user -d panscience_rag_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 30s # Give the DB more time to start up initially
+    networks:
+      - rag_network
+
+# Define named volumes for persistent data
+volumes:
+  db_data:          # For PostgreSQL database
+  vector_db_data:   # For FAISS index or other vector DB data
+
+# Define a custom network for inter-service communication
+networks:
+  rag_network:
+    driver: bridge
