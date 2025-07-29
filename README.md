@@ -24,26 +24,26 @@ This repository contains the solution for the LLM Specialist Assignment, impleme
 
 ## Features
 
-* [cite_start]**Document Ingestion & Processing**: [cite: 7]
-    * [cite_start]Supports uploading PDF and TXT documents (up to 20 documents, max 100MB each). [cite: 8]
-    * [cite_start]Automatic chunking of documents into manageable sizes. [cite: 9]
-    * [cite_start]Generates text embeddings for document chunks. [cite: 10]
-    * [cite_start]Stores chunks and embeddings in a local FAISS vector database. [cite: 10]
-    * [cite_start]Stores document metadata (filename, upload status, etc.) in a PostgreSQL database. [cite: 22]
-* [cite_start]**Retrieval-Augmented Generation (RAG) Pipeline**: [cite: 11]
-    * [cite_start]Accepts user queries. [cite: 12]
-    * [cite_start]Retrieves top-K most relevant document chunks based on the query. [cite: 12]
-    * [cite_start]Passes retrieved chunks and the query to an LLM API (OpenAI/Gemini) for contextual response generation. [cite: 14]
-    * [cite_start]Ensures responses are accurate, concise, and relevant to uploaded documents. [cite: 15]
-* [cite_start]**API & Application Architecture**: [cite: 16]
-    * [cite_start]Implemented as a REST API using FastAPI. [cite: 17, 18]
-    * [cite_start]Exposes endpoints for document upload, system querying, and viewing document metadata. [cite: 19, 20, 21]
-* [cite_start]**Deployment & Containerization**: [cite: 23]
-    * [cite_start]Provided with a `Dockerfile` and `docker-compose.yml` for easy setup. [cite: 24]
-    * [cite_start]Ensures seamless deployment on local machines. [cite: 25]
-* [cite_start]**Testing & Documentation**: [cite: 26]
-    * [cite_start]Includes unit and integration tests for core functionalities. [cite: 27]
-    * [cite_start]Comprehensive `README.md` with setup and usage instructions. [cite: 28]
+* **Document Ingestion & Processing**:
+    * Supports uploading PDF and TXT documents (up to 20 documents, max 100MB each).
+    * Automatic chunking of documents into manageable sizes
+    * Generates text embeddings for document chunks.
+    * Stores chunks and embeddings in a local FAISS vector database.
+    * Stores document metadata (filename, upload status, etc.) in a PostgreSQL database.
+* **Retrieval-Augmented Generation (RAG) Pipeline**:
+    * Accepts user queries.
+    * Retrieves top-K most relevant document chunks based on the query.
+    * Passes retrieved chunks and the query to an LLM API (OpenAI/Gemini) for contextual response generation.
+    * Ensures responses are accurate, concise, and relevant to uploaded documents.
+* **API & Application Architecture**:
+    * Implemented as a REST API using FastAPI.
+    * Exposes endpoints for document upload, system querying, and viewing document metadata.
+* **Deployment & Containerization**:
+    * Provided with a `Dockerfile` and `docker-compose.yml` for easy setup.
+    * Ensures seamless deployment on local machines.
+* **Testing & Documentation**:
+    * Includes unit and integration tests for core functionalities.
+    * Comprehensive `README.md` with setup and usage instructions.
 
 ## Requirements
 
@@ -140,17 +140,17 @@ This interface allows you to test all available endpoints directly from your bro
 
 ### Endpoints
 
-#### [cite_start]Upload Documents (`POST /upload/documents`) [cite: 19]
+#### Upload Documents (`POST /upload/documents`)
 
-* **Description**: Uploads one or more PDF/TXT documents for processing. [cite_start]Documents will be chunked, embedded, and stored. [cite: 7]
+* **Description**: Uploads one or more PDF/TXT documents for processing. Documents will be chunked, embedded, and stored.
 * **Method**: `POST`
 * **URL**: `http://localhost:8000/upload/documents`
 * **Content-Type**: `multipart/form-data`
 * **Form Data**:
     * `files`: Multiple file inputs (select your PDF or TXT documents).
 * **Constraints**:
-    * [cite_start]Supports up to 20 documents per request. [cite: 8]
-    * [cite_start]Each document has a maximum size of approximately 100MB (proxy for 1000 pages). [cite: 8]
+    * Supports up to 20 documents per request.
+    * Each document has a maximum size of approximately 100MB (proxy for 1000 pages).
 * **Example Response**:
     ```json
     {
@@ -171,9 +171,9 @@ This interface allows you to test all available endpoints directly from your bro
     }
     ```
 
-#### [cite_start]Query System (`POST /query/ask`) [cite: 20]
+#### Query System (`POST /query/ask`)
 
-* **Description**: Asks a question against the content of the uploaded documents. [cite_start]The system retrieves relevant chunks and uses an LLM to generate a contextual answer. [cite: 12, 14]
+* **Description**: Asks a question against the content of the uploaded documents. The system retrieves relevant chunks and uses an LLM to generate a contextual answer.
 * **Method**: `POST`
 * **URL**: `http://localhost:8000/query/ask`
 * **Content-Type**: `application/json`
@@ -194,9 +194,9 @@ This interface allows you to test all available endpoints directly from your bro
     }
     ```
 
-#### [cite_start]View Document Metadata (`GET /documents/metadata`) [cite: 21]
+#### View Document Metadata (`GET /documents/metadata`)
 
-* [cite_start]**Description**: Retrieves a list of metadata for all documents that have been uploaded and processed. [cite: 21]
+* **Description**: Retrieves a list of metadata for all documents that have been uploaded and processed.
 * **Method**: `GET`
 * **URL**: `http://localhost:8000/documents/metadata`
 * **Query Parameters**:
@@ -236,7 +236,7 @@ The application supports different LLM providers through environment variables.
 
 ## Testing Guidelines
 
-[cite_start]Unit and integration tests are provided in the `tests/` directory. [cite: 27]
+Unit and integration tests are provided in the `tests/` directory.
 
 1.  **Ensure Docker Compose is running (at least the `metadata_db` service if testing locally without app container):**
     ```bash
@@ -254,7 +254,7 @@ The application supports different LLM providers through environment variables.
 
 ## Deployment Notes
 
-[cite_start]The `docker-compose.yml` provides a setup for local deployment. [cite: 24] For cloud environments (AWS, GCP, Azure), consider the following:
+The `docker-compose.yml` provides a setup for local deployment. For cloud environments (AWS, GCP, Azure), consider the following:
 
 * **Managed Databases**: Replace the `metadata_db` PostgreSQL container with a managed database service (e.g., AWS RDS, Azure SQL Database, Google Cloud SQL) for better scalability, reliability, and maintenance. Update `DATABASE_URL` accordingly.
 * **Managed Vector Stores**: For production-grade applications, consider managed vector databases like Pinecone, Weaviate, or ChromaDB Cloud. These offer better scalability and performance than a local FAISS index. If using them, update `app/services/ingest.py` and `app/services/retriever.py` to use their respective clients.
@@ -266,11 +266,11 @@ The application supports different LLM providers through environment variables.
 
 This project aims to address the following evaluation criteria:
 
-* [cite_start]**Efficiency of document retrieval and response generation**: Achieved through chunking, embeddings, vector database similarity search, and direct LLM API integration. [cite: 39]
-* [cite_start]**Scalability and performance of the RAG pipeline**: Modular architecture with FastAPI, separate services (DB, LLM), and containerization supports scalability. [cite: 40]
-* [cite_start]**Code quality, modularity, and adherence to best practices**: Organized into logical modules (services, routes, models), uses FastAPI best practices, and follows Python coding standards. [cite: 42]
-* [cite_start]**Ease of setup and deployment using Docker**: Provided `Dockerfile` and `docker-compose.yml` ensure a straightforward setup process. [cite: 43]
-* [cite_start]**Thoroughness of documentation and test coverage**: Comprehensive `README.md` and dedicated test suite for core functionalities. [cite: 44]
+* **Efficiency of document retrieval and response generation**: Achieved through chunking, embeddings, vector database similarity search, and direct LLM API integration.
+* **Scalability and performance of the RAG pipeline**: Modular architecture with FastAPI, separate services (DB, LLM), and containerization supports scalability.
+* **Code quality, modularity, and adherence to best practices**: Organized into logical modules (services, routes, models), uses FastAPI best practices, and follows Python coding standards.
+* **Ease of setup and deployment using Docker**: Provided `Dockerfile` and `docker-compose.yml` ensure a straightforward setup process.
+* **Thoroughness of documentation and test coverage**: Comprehensive `README.md` and dedicated test suite for core functionalities.
 
 ## Future Enhancements
 
