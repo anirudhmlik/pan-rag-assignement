@@ -7,7 +7,6 @@ This repository contains the solution for the PanScience LLM Specialist Assignme
 ## 📁 Table of Contents
 
 * [✨ Features](#-features)
-* [🔧 Requirements](#-requirements)
 * [⚙️ Setup and Installation](#️-setup-and-installation)
 
   * [📌 Prerequisites](#-prerequisites)
