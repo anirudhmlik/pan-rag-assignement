@@ -1,19 +1,17 @@
-
-
 🚀 PanScience Innovations – LLM Specialist Assignment (RAG Pipeline)
 
 This repository contains the solution for the PanScience LLM Specialist Assignment — a Retrieval-Augmented Generation (RAG) pipeline. It enables users to upload documents, processes them using embeddings, stores them in a FAISS vector DB, and answers user queries contextually using an LLM (OpenAI or Gemini).
 
 ⸻
 
-📑 Table of Contents
+📁 Table of Contents
 	•	✨ Features
 	•	🔧 Requirements
 	•	⚙️ Setup and Installation
 	•	📌 Prerequisites
 	•	🐳 Local Setup (Docker)
-	•	🧪 Manual Setup (Dev)
-	•	🧪 API Usage
+	•	🧲 Manual Setup (Dev)
+	•	🥪 API Usage
 	•	🧠 LLM Configuration
 	•	✅ Testing
 	•	🚀 Deployment Notes
@@ -23,35 +21,16 @@ This repository contains the solution for the PanScience LLM Specialist Assignme
 ⸻
 
 ✨ Features
-
-<details>
-<summary><strong>📄 Document Ingestion & Processing</strong></summary>
-
-
 	•	Upload PDF/TXT files (max 20, 100MB each).
 	•	Automatically chunked into segments.
 	•	Embeddings generated via HuggingFace models.
 	•	Stored in a FAISS vector database.
 	•	Metadata saved in PostgreSQL.
 
-</details>
-
-
-<details>
-<summary><strong>🧠 Retrieval-Augmented Generation (RAG)</strong></summary>
-
-
 	•	Accepts natural language queries.
 	•	Retrieves top-k most relevant chunks.
 	•	Sends content + query to an LLM (OpenAI or Gemini).
 	•	Returns a contextual, concise answer.
-
-</details>
-
-
-<details>
-<summary><strong>🧱 API Architecture</strong></summary>
-
 
 	•	Built using FastAPI.
 	•	Exposes endpoints for:
@@ -60,26 +39,14 @@ This repository contains the solution for the PanScience LLM Specialist Assignme
 	•	Metadata Retrieval
 	•	Query History
 
-</details>
-
-
-<details>
-<summary><strong>📦 Containerized & Tested</strong></summary>
-
-
 	•	Docker & Docker Compose ready.
 	•	Persistent volumes for DB + FAISS.
 	•	Unit & integration test script included.
 
-</details>
-
-
-
 ⸻
 
 🔧 Requirements
-	•	Docker & Docker Compose (v1.28+)
-	•	Python 3.9+ (for manual/local dev)
+	•	
 
 ⸻
 
@@ -116,7 +83,7 @@ Open the API docs:
 
 ⸻
 
-🧪 Manual Setup (Dev)
+🧲 Manual Setup (Dev)
 
 Useful for debugging without Docker.
 
@@ -140,9 +107,9 @@ uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 
 ⸻
 
-📡 API Usage
+🛰 API Usage
 
-🧭 Swagger UI
+🧽 Swagger UI
 
 http://localhost:8000/docs
 
@@ -218,12 +185,30 @@ OPENAI_API_KEY=your_openai_key_here
 
 ⸻
 
+🖥️ Streamlit Interface (Optional UI)
+
+For a visual and user-friendly interface to interact with your RAG pipeline:
+	1.	Ensure your Docker container is running:
+
+docker-compose up --build -d
+
+
+	2.	Access the Streamlit app (inside the container):
+
+docker exec -it pan-rag-assignement-rag_app-1 streamlit run streamlit_app.py --server.port 8501
+
+
+	3.	Open the UI in your browser:
+👉 http://localhost:8501
+
+The Streamlit interface allows:
+	•	Uploading and querying documents interactively
+	•	Selecting between OpenAI and Gemini
+	•	Viewing source document context for each answer
+
+⸻
+
 ✅ Testing
-
-<details>
-<summary><strong>🧪 Run Tests Inside Docker (Recommended)</strong></summary>
-
-
 	1.	Ensure Docker is up:
 
 docker-compose up --build -d
@@ -241,22 +226,12 @@ python -m app.test_full_pipeline
 
 
 
-✅ Tests document ingestion, FAISS indexing, retrieval, and LLM response.
-
-</details>
-
-
-<details>
-<summary><strong>⚙️ Run Tests Locally (For Devs)</strong></summary>
-
+📅 Tests document ingestion, FAISS indexing, retrieval, and LLM response.
 
 docker-compose up -d metadata_db
 source venv/bin/activate
 export $(grep -v '^#' .env | xargs)
 python app/test_full_pipeline.py
-
-</details>
-
 
 
 ⸻
@@ -288,98 +263,8 @@ python app/test_full_pipeline.py
 
 ⸻
 
-🧾 1. GitHub Wiki Starter Structure (Optional but Great for Teams)
-
-You can create a GitHub Wiki with the following structure:
-
-🗂 Wiki Structure (Markdown files)
-	•	Home.md
-Brief intro, architecture diagram, link to README
-	•	API.md
-Detailed usage of endpoints, with curl/Postman examples
-	•	LLM_Configuration.md
-Switching between OpenAI/Gemini, setting up .env
-	•	Testing.md
-Guide on using test_full_pipeline.py, pytest, or Docker tests
-	•	Deployment.md
-Docker Compose, cloud deployment notes
-
-✅ How to Add:
-	1.	On GitHub repo page → click the “Wiki” tab.
-	2.	Start with Home and link other pages.
-	3.	You can copy most of the content from your README sections to populate it.
-
-Want me to generate the .md files for you? Just say yes.
-
-⸻
-
-📘 2. mkdocs.yml + Docs Structure for Static Site Docs (like https://docs.streamlit.io)
-
-mkdocs.yml (basic)
-
-site_name: PanScience RAG Pipeline
-theme:
-  name: material
-nav:
-  - Home: index.md
-  - Setup: setup.md
-  - API Usage: api.md
-  - Testing: testing.md
-  - Deployment: deployment.md
-  - LLM Config: llm.md
-  - Future Enhancements: future.md
-
-Folder structure:
-
-/docs
-  ├─ index.md
-  ├─ setup.md
-  ├─ api.md
-  ├─ testing.md
-  ├─ deployment.md
-  ├─ llm.md
-  ├─ future.md
-
-Setup:
-
-pip install mkdocs mkdocs-material
-mkdocs serve
-
-Want me to generate all those .md files too? Just say yes.
-
-⸻
-
-🔗 3. Postman Environment (clickable import)
-
-You already have the collection, now here’s a simple environment you can import to auto-fill the base URL and LLM provider:
-
-📁 File: PanScience_RAG_Environment.postman_environment.json
-
-{
-  "id": "d9b92e42-fd44-41b1-bfa2-baaa2f1812ab",
-  "name": "PanScience RAG Environment",
-  "values": [
-    {
-      "key": "base_url",
-      "value": "http://localhost:8000",
-      "enabled": true
-    },
-    {
-      "key": "llm_provider",
-      "value": "gemini",
-      "enabled": true
-    }
-  ],
-  "_postman_variable_scope": "environment",
-  "_postman_exported_at": "2025-07-30T10:00:00.000Z",
-  "_postman_exported_using": "Postman/10.23.0"
-}
-
-✅ How to Use
-	1.	Open Postman
-	2.	Go to Environments → Import
-	3.	Select the above JSON file
-	4.	Use {{base_url}}/upload/documents in your requests
-
-⸻
-
+This project includes:
+	•	✅ A GitHub Wiki with structured guides
+	•	✅ A docs/ folder for generating a documentation site via mkdocs-material
+	•	✅ A Postman collection and environment for testing API endpoints
+	•	✅ A Streamlit-based UI for real-time document querying, upload, and LLM responses
