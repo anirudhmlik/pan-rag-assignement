@@ -287,3 +287,99 @@ python app/test_full_pipeline.py
 	•	Multi-index support (per-user or per-project)
 
 ⸻
+
+🧾 1. GitHub Wiki Starter Structure (Optional but Great for Teams)
+
+You can create a GitHub Wiki with the following structure:
+
+🗂 Wiki Structure (Markdown files)
+	•	Home.md
+Brief intro, architecture diagram, link to README
+	•	API.md
+Detailed usage of endpoints, with curl/Postman examples
+	•	LLM_Configuration.md
+Switching between OpenAI/Gemini, setting up .env
+	•	Testing.md
+Guide on using test_full_pipeline.py, pytest, or Docker tests
+	•	Deployment.md
+Docker Compose, cloud deployment notes
+
+✅ How to Add:
+	1.	On GitHub repo page → click the “Wiki” tab.
+	2.	Start with Home and link other pages.
+	3.	You can copy most of the content from your README sections to populate it.
+
+Want me to generate the .md files for you? Just say yes.
+
+⸻
+
+📘 2. mkdocs.yml + Docs Structure for Static Site Docs (like https://docs.streamlit.io)
+
+mkdocs.yml (basic)
+
+site_name: PanScience RAG Pipeline
+theme:
+  name: material
+nav:
+  - Home: index.md
+  - Setup: setup.md
+  - API Usage: api.md
+  - Testing: testing.md
+  - Deployment: deployment.md
+  - LLM Config: llm.md
+  - Future Enhancements: future.md
+
+Folder structure:
+
+/docs
+  ├─ index.md
+  ├─ setup.md
+  ├─ api.md
+  ├─ testing.md
+  ├─ deployment.md
+  ├─ llm.md
+  ├─ future.md
+
+Setup:
+
+pip install mkdocs mkdocs-material
+mkdocs serve
+
+Want me to generate all those .md files too? Just say yes.
+
+⸻
+
+🔗 3. Postman Environment (clickable import)
+
+You already have the collection, now here’s a simple environment you can import to auto-fill the base URL and LLM provider:
+
+📁 File: PanScience_RAG_Environment.postman_environment.json
+
+{
+  "id": "d9b92e42-fd44-41b1-bfa2-baaa2f1812ab",
+  "name": "PanScience RAG Environment",
+  "values": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8000",
+      "enabled": true
+    },
+    {
+      "key": "llm_provider",
+      "value": "gemini",
+      "enabled": true
+    }
+  ],
+  "_postman_variable_scope": "environment",
+  "_postman_exported_at": "2025-07-30T10:00:00.000Z",
+  "_postman_exported_using": "Postman/10.23.0"
+}
+
+✅ How to Use
+	1.	Open Postman
+	2.	Go to Environments → Import
+	3.	Select the above JSON file
+	4.	Use {{base_url}}/upload/documents in your requests
+
+⸻
+
