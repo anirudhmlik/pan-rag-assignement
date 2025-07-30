@@ -17,7 +17,7 @@ from sqlalchemy import exc
 
 # Configuration
 # Change VECTOR_DB_PATH to be just the directory name
-VECTOR_DB_DIRECTORY = os.getenv("VECTOR_DB_PATH", "vector_db_data/faiss_index")
+VECTOR_DB_DIRECTORY = os.getenv("VECTOR_DB_DIRECTORY", "vector_db_data/faiss_index")
 EMBEDDING_MODEL_NAME = os.getenv("EMBEDDING_MODEL_NAME", "sentence-transformers/all-MiniLM-L6-v2")
 
 # Ensure the vector DB directory exists

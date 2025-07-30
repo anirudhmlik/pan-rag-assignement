@@ -12,15 +12,11 @@ services:
     env_file:
       - .env # Load environment variables from a .env file in the root
     environment:
-      # Override DATABASE_URL to connect to the 'metadata_db' service within the Docker network
       DATABASE_URL: postgresql+psycopg2://user:password@metadata_db:5432/panscience_rag_db
-      # Ensure VECTOR_DB_PATH points to the mounted volume within the container
-      VECTOR_DB_PATH: /app/vector_db_data # This path inside the container will use the 'vector_db_data' volume
+      VECTOR_DB_DIRECTORY: /app/vector_db_data/faiss_index
     volumes:
       # Mount your app directory for easier development (code changes reflect without rebuilding)
       - ./app:/app/app
-      # Persistent storage for FAISS/Chroma indexes. Data written to /app/vector_db_data inside the container
-      # will persist in the named 'vector_db_data' volume.
       - vector_db_data:/app/vector_db_data
     depends_on:
       metadata_db:

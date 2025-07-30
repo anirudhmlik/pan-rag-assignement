@@ -1,0 +1,146 @@
+{
+	"info": {
+		"_postman_id": "YOUR_POSTMAN_COLLECTION_ID_HERE",
+		"name": "PanScience RAG Pipeline",
+		"description": "Postman collection for the PanScience Retrieval-Augmented Generation (RAG) API.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_collection_link": "https://www.postman.com/collections/YOUR_COLLECTION_LINK_HERE"
+	},
+	"variables": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8000",
+			"type": "string",
+			"description": "Base URL of the FastAPI application"
+		}
+	],
+	"item": [
+		{
+			"name": "Upload Documents",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "files",
+							"type": "file",
+							"src": "/path/to/your/your_pdf.pdf",
+							"description": "Select your PDF or TXT file here. Example: your_pdf_zs.pdf"
+						},
+						{
+							"key": "files",
+							"type": "file",
+							"src": "/path/to/your/your_2_pdf.pdf",
+							"description": "You can add multiple files. Example: your_2_pdf_cv.pdf"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseUrl}}/upload/documents",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"upload",
+						"documents"
+					]
+				},
+				"description": "Uploads one or more PDF/TXT documents for processing into the RAG pipeline. Max 20 files, 100MB each."
+			},
+			"response": []
+		},
+		{
+			"name": "Query System",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"query\": \"compare your_pdf and your_2_pdf\",\n    \"top_k\": 4\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/query/ask",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"query",
+						"ask"
+					]
+				},
+				"description": "Asks a question against the content of the uploaded documents. Retrieves relevant chunks and uses an LLM to generate a contextual answer."
+			},
+			"response": []
+		},
+		{
+			"name": "View Document Metadata",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/documents/metadata?limit=10&skip=0&status_filter=completed",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"documents",
+						"metadata"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "10"
+						},
+						{
+							"key": "skip",
+							"value": "0"
+						},
+						{
+							"key": "status_filter",
+							"value": "completed",
+							"description": "Optional: Filter by status (e.g., completed, processing, failed)"
+						}
+					]
+				},
+				"description": "Retrieves a list of metadata for all documents that have been uploaded and processed."
+			},
+			"response": []
+		},
+		{
+			"name": "View Query History",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/query/history?limit=10&offset=0",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"query",
+						"history"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "10"
+						},
+						{
+							"key": "offset",
+							"value": "0"
+						}
+					]
+				},
+				"description": "Retrieves a list of past queries and their corresponding responses from the database."
+			},
+			"response": []
+		}
+	]
+}
