@@ -49,12 +49,6 @@ This repository contains the solution for the PanScience LLM Specialist Assignme
 
 ---
 
-## 🔧 Requirements
-
-*
-
----
-
 ## ⚙️ Setup and Installation
 
 ### 📌 Prerequisites
@@ -301,5 +295,3 @@ This project includes:
 * ✅ A `docs/` folder for generating a documentation site via [`mkdocs-material`](https://squidfunk.github.io/mkdocs-material/)
 * ✅ A Postman collection and environment for testing API endpoints
 * ✅ A Streamlit-based UI for real-time document querying, upload, and LLM responses
-
-I have integrated the streamlit as well\\
