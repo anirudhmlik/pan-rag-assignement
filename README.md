@@ -1,62 +1,52 @@
-🚀 PanScience Innovations – LLM Specialist Assignment (RAG Pipeline)
-
+PanScience Innovations LLM Specialist Assignment - RAG Pipeline
 This repository contains the solution for the PanScience LLM Specialist Assignment — a Retrieval-Augmented Generation (RAG) pipeline. It enables users to upload documents, processes them using embeddings, stores them in a FAISS vector DB, and answers user queries contextually using an LLM (OpenAI or Gemini).
 
-⸻
-
 📁 Table of Contents
-	•	✨ Features
-	•	🔧 Requirements
-	•	⚙️ Setup and Installation
-	•	📌 Prerequisites
-	•	🐳 Local Setup (Docker)
-	•	🧲 Manual Setup (Dev)
-	•	🥪 API Usage
-	•	🧠 LLM Configuration
-	•	✅ Testing
-	•	🚀 Deployment Notes
-	•	📈 Evaluation Criteria
-	•	🔮 Future Enhancements
-
-⸻
+•   ✨ Features
+•   🔧 Requirements
+•   ⚙️ Setup and Installation
+•   📌 Prerequisites
+•   🐳 Local Setup (Docker)
+•   🧲 Manual Setup (Dev)
+•   🥪 API Usage
+•   🧠 LLM Configuration
+•   ✅ Testing
+•   🚀 Deployment Notes
+•   📈 Evaluation Criteria
+•   🔮 Future Enhancements
 
 ✨ Features
-	•	Upload PDF/TXT files (max 20, 100MB each).
-	•	Automatically chunked into segments.
-	•	Embeddings generated via HuggingFace models.
-	•	Stored in a FAISS vector database.
-	•	Metadata saved in PostgreSQL.
+•   Upload PDF/TXT files (max 20, 100MB each).
+•   Automatically chunked into segments.
+•   Embeddings generated via HuggingFace models.
+•   Stored in a FAISS vector database.
+•   Metadata saved in PostgreSQL.
 
-	•	Accepts natural language queries.
-	•	Retrieves top-k most relevant chunks.
-	•	Sends content + query to an LLM (OpenAI or Gemini).
-	•	Returns a contextual, concise answer.
+•   Accepts natural language queries.
+•   Retrieves top-k most relevant chunks.
+•   Sends content + query to an LLM (OpenAI or Gemini).
+•   Returns a contextual, concise answer.
 
-	•	Built using FastAPI.
-	•	Exposes endpoints for:
-	•	Document Upload
-	•	Query Execution
-	•	Metadata Retrieval
-	•	Query History
+•   Built using FastAPI.
+•   Exposes endpoints for:
+    •   Document Upload
+    •   Query Execution
+    •   Metadata Retrieval
+    •   Query History
 
-	•	Docker & Docker Compose ready.
-	•	Persistent volumes for DB + FAISS.
-	•	Unit & integration test script included.
-
-⸻
+•   Docker & Docker Compose ready.
+•   Persistent volumes for DB + FAISS.
+•   Unit & integration test script included.
 
 🔧 Requirements
-	•	
-
-⸻
+•   Docker and Docker Compose (v1.28+ recommended)
+•   Python 3.9+ (for local development/testing)
 
 ⚙️ Setup and Installation
 
 📌 Prerequisites
 
 Install Docker Desktop or Docker Engine + Docker Compose on your system.
-
-⸻
 
 🐳 Local Setup (Docker)
 
@@ -81,8 +71,6 @@ The DB tables (documents, chunks, query_logs) are initialized automatically on f
 Open the API docs:
 📍 http://localhost:8000/docs
 
-⸻
-
 🧲 Manual Setup (Dev)
 
 Useful for debugging without Docker.
@@ -104,16 +92,11 @@ Run the app:
 
 uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 
-
-⸻
-
 🛰 API Usage
 
 🧽 Swagger UI
 
 http://localhost:8000/docs
-
-⸻
 
 📤 POST /upload/documents
 
@@ -137,9 +120,6 @@ Example Response:
   ]
 }
 
-
-⸻
-
 ❓ POST /query/ask
 
 Request:
@@ -156,25 +136,18 @@ Response:
   "response": "The uploaded document is a resume focused on machine learning and AI development."
 }
 
-
-⸻
-
 📄 GET /documents/metadata
 
 Fetch metadata for uploaded documents.
 
 Query params (optional):
-	•	skip
-	•	limit
-	•	status_filter
-
-⸻
+•   skip
+•   limit
+•   status_filter
 
 📚 GET /query/history
 
 Returns recent queries and their generated responses.
-
-⸻
 
 🔐 LLM Configuration
 
@@ -182,49 +155,39 @@ LLM_PROVIDER=gemini  # or openai
 GEMINI_API_KEY=your_key_here
 OPENAI_API_KEY=your_openai_key_here
 
-
-⸻
-
 🖥️ Streamlit Interface (Optional UI)
 
 For a visual and user-friendly interface to interact with your RAG pipeline:
-	1.	Ensure your Docker container is running:
+1.  Ensure your Docker container is running:
 
 docker-compose up --build -d
 
-
-	2.	Access the Streamlit app (inside the container):
+2.  Access the Streamlit app (inside the container):
 
 docker exec -it pan-rag-assignement-rag_app-1 streamlit run streamlit_app.py --server.port 8501
 
+3.  Open the UI in your browser:
 
-	3.	Open the UI in your browser:
 👉 http://localhost:8501
 
 The Streamlit interface allows:
-	•	Uploading and querying documents interactively
-	•	Selecting between OpenAI and Gemini
-	•	Viewing source document context for each answer
-
-⸻
+•   Uploading and querying documents interactively
+•   Selecting between OpenAI and Gemini
+•   Viewing source document context for each answer
 
 ✅ Testing
-	1.	Ensure Docker is up:
+1.  Ensure Docker is up:
 
 docker-compose up --build -d
 
-
-	2.	Add a test document:
+2.  Add a test document:
 
 docker cp test_document.pdf pan-rag-assignement-rag_app-1:/app/test_document.pdf
 
-
-	3.	Run test:
+3.  Run test:
 
 docker exec -it pan-rag-assignement-rag_app-1 bash
 python -m app.test_full_pipeline
-
-
 
 📅 Tests document ingestion, FAISS indexing, retrieval, and LLM response.
 
@@ -233,38 +196,29 @@ source venv/bin/activate
 export $(grep -v '^#' .env | xargs)
 python app/test_full_pipeline.py
 
-
-⸻
-
 🚀 Deployment Notes
-	•	✅ Use RDS / Cloud SQL for production-grade Postgres.
-	•	✅ Use Pinecone / Weaviate / Qdrant for scalable vector stores.
-	•	✅ Secure env vars using AWS Secrets Manager, GCP Secret Manager, or Docker Swarm/Kubernetes secrets.
-	•	✅ Deploy with ECS/Fargate, GKE, or Cloud Run for scalability.
-
-⸻
+•   ✅ Use RDS / Cloud SQL for production-grade Postgres.
+•   ✅ Use Pinecone / Weaviate / Qdrant for scalable vector stores.
+•   ✅ Secure env vars using AWS Secrets Manager, GCP Secret Manager, or Docker Swarm/Kubernetes secrets.
+•   ✅ Deploy with ECS/Fargate, GKE, or Cloud Run for scalability.
 
 📈 Evaluation Criteria Addressed
-	•	✅ Efficient vector retrieval + LLM response
-	•	✅ Modular, scalable architecture (FastAPI + Docker)
-	•	✅ Clean code, organized structure
-	•	✅ Clear documentation and tests
-
-⸻
+•   ✅ Efficient vector retrieval + LLM response
+•   ✅ Modular, scalable architecture (FastAPI + Docker)
+•   ✅ Clean code, organized structure
+•   ✅ Clear documentation and tests
 
 🔮 Future Enhancements
-	•	DOCX/Markdown support
-	•	Semantic chunking
-	•	Background ingestion (Celery/Redis)
-	•	Auth layer (JWT/OAuth)
-	•	Web UI / Streamlit
-	•	Metrics + monitoring
-	•	Multi-index support (per-user or per-project)
-
-⸻
+•   DOCX/Markdown support
+•   Semantic chunking
+•   Background ingestion (Celery/Redis)
+•   Auth layer (JWT/OAuth)
+•   Web UI / Streamlit
+•   Metrics + monitoring
+•   Multi-index support (per-user or per-project)
 
 This project includes:
-	•	✅ A GitHub Wiki with structured guides
-	•	✅ A docs/ folder for generating a documentation site via mkdocs-material
-	•	✅ A Postman collection and environment for testing API endpoints
-	•	✅ A Streamlit-based UI for real-time document querying, upload, and LLM responses
+•   ✅ A GitHub Wiki with structured guides
+•   ✅ A docs/ folder for generating a documentation site via mkdocs-material
+•   ✅ A Postman collection and environment for testing API endpoints
+•   ✅ A Streamlit-based UI for real-time document querying, upload, and LLM responses
